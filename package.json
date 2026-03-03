@@ -1,0 +1,23 @@
+{
+  "name": "week-3-lab",
+  "version": "1.0.0",
+  "description": "<img src=\"https://octodex.github.com/images/Professortocat_v2.png\" align=\"right\" height=\"200px\" />",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Deekshitha100/week-3-lab.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Deekshitha100/week-3-lab/issues"
+  },
+  "homepage": "https://github.com/Deekshitha100/week-3-lab#readme",
+  "devDependencies": {
+    "jest": "^30.2.0"
+  }
+}
