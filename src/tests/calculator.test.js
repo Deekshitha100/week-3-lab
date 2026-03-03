@@ -421,4 +421,21 @@ describe('Calculator Functions', () => {
       expect(result).toBe(8);
     });
   });
+
+  describe('Specific Operation Tests', () => {
+    test('modulo', () => {
+      expect(modulo(10, 3)).toBe(1);
+      expect(modulo(5, 2)).toBe(1);
+    });
+
+    test('power', () => {
+      expect(power(2, 3)).toBe(8);
+      expect(power(4, 0.5)).toBe(2);
+    });
+
+    test('squareroot', () => {
+      expect(squareRoot(16)).toBe(4);
+      expect(squareRoot(9)).toBe(3);
+    });
+  });
 });
