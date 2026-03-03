@@ -315,4 +315,110 @@ describe('Calculator Functions', () => {
       expect(() => calculate(10, '%', 0)).toThrow('Cannot divide by zero');
     });
   });
+
+  describe('Image Example Tests - Extended Operations', () => {
+    test('should calculate modulo with 5 % 2 = 1', () => {
+      expect(modulo(5, 2)).toBe(1);
+    });
+
+    test('should calculate modulo through calculate function: 5 % 2 = 1', () => {
+      expect(calculate(5, '%', 2)).toBe(1);
+    });
+
+    test('should calculate power with 2 ^ 3 = 8', () => {
+      expect(power(2, 3)).toBe(8);
+    });
+
+    test('should calculate power through calculate function: 2 ^ 3 = 8', () => {
+      expect(calculate(2, '^', 3)).toBe(8);
+    });
+
+    test('should calculate square root with √16 = 4', () => {
+      expect(squareRoot(16)).toBe(4);
+    });
+
+    test('should calculate power with 0.5 exponent for square root: 16 ^ 0.5 = 4', () => {
+      expect(power(16, 0.5)).toBe(4);
+    });
+
+    test('should calculate power through calculate for square root via exponent: 16 ^ 0.5 = 4', () => {
+      expect(calculate(16, '^', 0.5)).toBe(4);
+    });
+  });
+
+  describe('Extended Edge Cases - New Operations', () => {
+    test('should handle modulo with large numbers', () => {
+      expect(modulo(100, 7)).toBe(2);
+    });
+
+    test('should handle modulo resulting in zero', () => {
+      expect(modulo(15, 5)).toBe(0);
+    });
+
+    test('should handle modulo with mixed signs', () => {
+      expect(modulo(-7, 3)).toBe(-1);
+    });
+
+    test('should handle power with zero base', () => {
+      expect(power(0, 5)).toBe(0);
+    });
+
+    test('should handle power with base of one', () => {
+      expect(power(1, 100)).toBe(1);
+    });
+
+    test('should handle power with fractional exponent for cube root', () => {
+      expect(power(27, 1/3)).toBeCloseTo(3, 5);
+    });
+
+    test('should handle power with negative base and odd exponent', () => {
+      expect(power(-3, 3)).toBe(-27);
+    });
+
+    test('should handle power with negative base and even exponent', () => {
+      expect(power(-3, 2)).toBe(9);
+    });
+
+    test('should handle square root of perfect squares 1 through 100', () => {
+      for (let i = 1; i <= 10; i++) {
+        expect(squareRoot(i * i)).toBe(i);
+      }
+    });
+
+    test('should handle square root with very small positive numbers', () => {
+      expect(squareRoot(0.01)).toBe(0.1);
+    });
+
+    test('should handle square root of one', () => {
+      expect(squareRoot(1)).toBe(1);
+    });
+
+    test('should throw error for square root of negative numbers', () => {
+      expect(() => squareRoot(-1)).toThrow('Cannot calculate square root of a negative number');
+      expect(() => squareRoot(-100)).toThrow('Cannot calculate square root of a negative number');
+    });
+
+    test('should handle sequential operations: modulo then power', () => {
+      const moduloResult = modulo(5, 2); // 1
+      const powerResult = power(moduloResult + 1, 3); // (1+1)^3 = 8
+      expect(moduloResult).toBe(1);
+      expect(powerResult).toBe(8);
+    });
+
+    test('should handle sequential operations: power then square root', () => {
+      const powerResult = power(4, 2); // 16
+      const sqrtResult = squareRoot(powerResult); // √16 = 4
+      expect(powerResult).toBe(16);
+      expect(sqrtResult).toBe(4);
+    });
+
+    test('should handle complex calculation chain', () => {
+      // (10 % 3) ^ 2 + √16
+      const mod = modulo(10, 3); // 1
+      const pow = power(mod + 1, 2); // (1+1)^2 = 4
+      const sqrt = squareRoot(16); // 4
+      const result = pow + sqrt; // 4 + 4 = 8
+      expect(result).toBe(8);
+    });
+  });
 });
