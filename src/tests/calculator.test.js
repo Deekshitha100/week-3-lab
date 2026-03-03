@@ -1,0 +1,200 @@
+const { add, subtract, multiply, divide, calculate } = require('../calculator');
+
+describe('Calculator Functions', () => {
+  describe('Addition', () => {
+    test('should add two positive numbers correctly', () => {
+      expect(add(2, 3)).toBe(5);
+    });
+
+    test('should add two positive numbers: 10 + 20', () => {
+      expect(add(10, 20)).toBe(30);
+    });
+
+    test('should add negative numbers', () => {
+      expect(add(-5, -3)).toBe(-8);
+    });
+
+    test('should add positive and negative numbers', () => {
+      expect(add(10, -5)).toBe(5);
+    });
+
+    test('should add zero to a number', () => {
+      expect(add(5, 0)).toBe(5);
+    });
+
+    test('should add two zeros', () => {
+      expect(add(0, 0)).toBe(0);
+    });
+
+    test('should add decimal numbers', () => {
+      expect(add(2.5, 3.5)).toBe(6);
+    });
+
+    test('should add large numbers', () => {
+      expect(add(1000000, 2000000)).toBe(3000000);
+    });
+  });
+
+  describe('Subtraction', () => {
+    test('should subtract two positive numbers correctly', () => {
+      expect(subtract(10, 4)).toBe(6);
+    });
+
+    test('should subtract when result is negative', () => {
+      expect(subtract(5, 10)).toBe(-5);
+    });
+
+    test('should subtract negative numbers', () => {
+      expect(subtract(-5, -3)).toBe(-2);
+    });
+
+    test('should subtract with zero', () => {
+      expect(subtract(10, 0)).toBe(10);
+    });
+
+    test('should subtract a number from itself', () => {
+      expect(subtract(7, 7)).toBe(0);
+    });
+
+    test('should subtract decimal numbers', () => {
+      expect(subtract(10.5, 3.5)).toBe(7);
+    });
+
+    test('should subtract from zero', () => {
+      expect(subtract(0, 5)).toBe(-5);
+    });
+  });
+
+  describe('Multiplication', () => {
+    test('should multiply two positive numbers correctly', () => {
+      expect(multiply(45, 2)).toBe(90);
+    });
+
+    test('should multiply two small positive numbers', () => {
+      expect(multiply(3, 4)).toBe(12);
+    });
+
+    test('should multiply two negative numbers (result positive)', () => {
+      expect(multiply(-5, -3)).toBe(15);
+    });
+
+    test('should multiply positive by negative (result negative)', () => {
+      expect(multiply(5, -3)).toBe(-15);
+    });
+
+    test('should multiply by zero', () => {
+      expect(multiply(10, 0)).toBe(0);
+    });
+
+    test('should multiply by one', () => {
+      expect(multiply(7, 1)).toBe(7);
+    });
+
+    test('should multiply decimal numbers', () => {
+      expect(multiply(2.5, 4)).toBe(10);
+    });
+
+    test('should multiply large numbers', () => {
+      expect(multiply(100, 100)).toBe(10000);
+    });
+  });
+
+  describe('Division', () => {
+    test('should divide two positive numbers correctly', () => {
+      expect(divide(20, 5)).toBe(4);
+    });
+
+    test('should divide with decimal result', () => {
+      expect(divide(10, 3)).toBeCloseTo(3.333, 2);
+    });
+
+    test('should divide negative by positive', () => {
+      expect(divide(-10, 2)).toBe(-5);
+    });
+
+    test('should divide two negative numbers', () => {
+      expect(divide(-10, -2)).toBe(5);
+    });
+
+    test('should divide by one', () => {
+      expect(divide(7, 1)).toBe(7);
+    });
+
+    test('should divide decimal numbers', () => {
+      expect(divide(10.5, 3.5)).toBeCloseTo(3, 1);
+    });
+
+    test('should throw error when dividing by zero', () => {
+      expect(() => divide(10, 0)).toThrow('Cannot divide by zero');
+    });
+
+    test('should throw error when dividing zero by zero', () => {
+      expect(() => divide(0, 0)).toThrow('Cannot divide by zero');
+    });
+
+    test('should divide zero by a number', () => {
+      expect(divide(0, 5)).toBe(0);
+    });
+
+    test('should handle very small divisor resulting in large quotient', () => {
+      expect(divide(1, 0.001)).toBe(1000);
+    });
+  });
+
+  describe('Calculate Function (Main Operation Handler)', () => {
+    test('should handle addition operation', () => {
+      expect(calculate(2, '+', 3)).toBe(5);
+    });
+
+    test('should handle subtraction operation', () => {
+      expect(calculate(10, '-', 4)).toBe(6);
+    });
+
+    test('should handle multiplication operation', () => {
+      expect(calculate(45, '*', 2)).toBe(90);
+    });
+
+    test('should handle division operation', () => {
+      expect(calculate(20, '/', 5)).toBe(4);
+    });
+
+    test('should throw error for invalid operator', () => {
+      expect(() => calculate(5, '%', 2)).toThrow('Invalid operator');
+    });
+
+    test('should throw error when dividing by zero through calculate', () => {
+      expect(() => calculate(10, '/', 0)).toThrow('Cannot divide by zero');
+    });
+
+    test('should handle complex expression through calculate', () => {
+      expect(calculate(100, '+', 50)).toBe(150);
+      expect(calculate(100, '-', 50)).toBe(50);
+      expect(calculate(10, '*', 5)).toBe(50);
+      expect(calculate(50, '/', 10)).toBe(5);
+    });
+  });
+
+  describe('Edge Cases and Special Scenarios', () => {
+    test('should handle very large numbers', () => {
+      expect(add(Number.MAX_SAFE_INTEGER - 1, 1)).toBe(Number.MAX_SAFE_INTEGER);
+    });
+
+    test('should handle very small positive decimal numbers', () => {
+      expect(divide(1, 1000000)).toBe(0.000001);
+    });
+
+    test('should maintain precision for decimal operations', () => {
+      expect(multiply(0.1, 0.2)).toBeCloseTo(0.02, 10);
+    });
+
+    test('should handle negative zero correctly', () => {
+      expect(subtract(0, 0)).toBe(0);
+    });
+
+    test('should handle alternating signs in operations', () => {
+      expect(add(-10, 10)).toBe(0);
+      expect(subtract(-5, -5)).toBe(0);
+      expect(multiply(-1, -1)).toBe(1);
+    });
+  });
+});
